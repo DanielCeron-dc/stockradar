@@ -1,5 +1,5 @@
 import { Server } from 'socket.io';
-import dummyStockData from './data/dummy_stock_data.json';
+import dummyStockData from '../data/dummy_stock_data.json';
 
 const StockData = dummyStockData;
 
