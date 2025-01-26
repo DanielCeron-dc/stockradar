@@ -67,3 +67,47 @@ describe('useStockStore', () => {
         expect(currentMap.get('AAPL')).toEqual(updatedStock);
     });
 });
+
+describe('applyFilters', () => {
+    const stocks: IStock[] = [
+        { symbol: 'AAPL', name: 'Apple Inc.', price: 150, daily_change: 1.2 },
+        { symbol: 'GOOGL', name: 'Alphabet Inc.', price: 2800, daily_change: -0.5 },
+        { symbol: 'MSFT', name: 'Microsoft Corporation', price: 300, daily_change: 0.8 },
+    ];
+
+    const stockMap = new Map<string, IStock>();
+    stocks.forEach(stock => stockMap.set(stock.symbol, stock));
+
+    it('should return all stocks when querySearch is empty', () => {
+        const filtered = applyFilters(stockMap, '', 'asc');
+        expect(filtered.length).toBe(3);
+    });
+
+    it('should filter stocks by querySearch', () => {
+        const filtered = applyFilters(stockMap, 'AAPL', 'asc');
+        expect(filtered.length).toBe(1);
+        expect(filtered[0].symbol).toBe('AAPL');
+    });
+
+    it('should filter stocks case-insensitively', () => {
+        const filtered = applyFilters(stockMap, 'aapl', 'asc');
+        expect(filtered.length).toBe(1);
+        expect(filtered[0].symbol).toBe('AAPL');
+    });
+
+    it('should sort stocks in ascending order', () => {
+        const filtered = applyFilters(stockMap, '', 'asc');
+        expect(filtered.map(stock => stock.price)).toEqual([150, 300, 2800]);
+    });
+
+    it('should sort stocks in descending order', () => {
+        const filtered = applyFilters(stockMap, '', 'desc');
+        expect(filtered.map(stock => stock.price)).toEqual([2800, 300, 150]);
+    });
+
+    it('should combine search and sort', () => {
+        const filtered = applyFilters(stockMap, 'L', 'asc');
+        expect(filtered.length).toBe(2);
+        expect(filtered.map(stock => stock.price)).toEqual([150, 2800]);
+    });
+});
