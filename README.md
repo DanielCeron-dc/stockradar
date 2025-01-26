@@ -19,7 +19,7 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
 3. Start the mini backend
 
    ```bash
-   cd server && bun install && bun start
+   cd server && npm install && npm start
    ```
 
 4. Run tests
