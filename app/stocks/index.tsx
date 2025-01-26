@@ -6,6 +6,7 @@ import { useStockStore } from '@/store/stock.store';
 import { useFocusEffect } from 'expo-router';
 import { ThemedText } from '@/components/ThemedText';
 import Spacer from '@/components/layout/Spacer';
+import StockItem from '@/components/home/StockItem';
 
 export default function StocksScreen() {
 
@@ -25,15 +26,7 @@ export default function StocksScreen() {
             <FlatList
                 data={stockToRender}
                 keyExtractor={(item) => item.symbol}
-                renderItem={({ item }) => (
-                    <View>
-                        <ThemedText type='subtitle'>{item.symbol}</ThemedText>
-                        <ThemedText >{item.name}</ThemedText>
-                        <ThemedText>{item.price}</ThemedText>
-                        <ThemedText >{item.daily_change}</ThemedText>
-                        <View style={styles.separator} />
-                    </View>
-                )}
+                renderItem={({ item }) => <StockItem stock={item} />}
             />
         </ScreenContainer>
     );
