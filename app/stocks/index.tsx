@@ -9,7 +9,7 @@ import { useFocusEffect } from 'expo-router';
 import { ThemedText } from '@/components/ThemedText';
 import FilterActions from '@/components/home/FilterActions';
 import Spacer from '@/components/layout/Spacer';
-
+import OfflineMessage from '@/components/OfflineMessage';
 
 export default function StocksScreen() {
     const [isFocused, setFocused] = React.useState(true);
@@ -37,6 +37,7 @@ export default function StocksScreen() {
             <Spacer size='small' />
             <FilterActions />
             <Spacer size='small' />
+            <OfflineMessage />
             {isFocused && <AnimatedList
                 data={stockToRender}
                 renderItem={({ item }) => (
