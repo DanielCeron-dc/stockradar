@@ -5,9 +5,11 @@ import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
+import { Platform } from 'react-native';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { useSocket } from '@/hooks/useSockets';
 
+// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
@@ -16,11 +18,10 @@ export default function RootLayout() {
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
 
-
   useSocket({
-    url: 'http://localhost:3000',
+    url: Platform.OS === "android" ? "http://10.0.2.2:3000" : 'http://localhost:3000',
+    opts: {},
   });
-
 
   useEffect(() => {
     if (loaded) {
@@ -38,7 +39,6 @@ export default function RootLayout() {
         screenOptions={{
           headerShown: false,
         }}
-        initialRouteName='stocks'
       >
         <Stack.Screen
           name="stocks"
