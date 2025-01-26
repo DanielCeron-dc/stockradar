@@ -15,7 +15,7 @@ export default function StockItem(props: IProps) {
 
     return (
         <TouchableOpacity style={styles.container} onPress={() => {
-            //router.push(`/stocks/${stock.symbol}`);
+            router.push(`/stocks/${stock.symbol}`);
         }}>
             <View style={styles.left}>
                 <ThemedText style={styles.symbol}>{stock.symbol}</ThemedText>

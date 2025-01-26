@@ -9,6 +9,10 @@ export default function StocksLayout() {
                 name="index"
                 options={{ headerShown: false }}
             />
+            <Stack.Screen
+                name="[symbol]"
+                options={{ title: 'Stock Details' }}
+            />
         </Stack>
     );
 }
