@@ -1,23 +1,23 @@
 import { FlatList, StyleSheet, View } from 'react-native';
+import StockItem from '@/components/home/StockItem';
 import ScreenContainer from '@/components/layout/ScreenContainer';
+import AnimatedList from '@/components/AnimatedList';
 import React from 'react';
 
-import { useStockStore } from '@/store/stock.store';
+import { applyFilters, useStockStore } from '@/store/stock.store';
 import { useFocusEffect } from 'expo-router';
 import { ThemedText } from '@/components/ThemedText';
+import FilterActions from '@/components/home/FilterActions';
 import Spacer from '@/components/layout/Spacer';
-import StockItem from '@/components/home/StockItem';
-import AnimatedList from '@/components/AnimatedList';
+
 
 export default function StocksScreen() {
-
-    const stocks = useStockStore((state) => state.stocks);
     const [isFocused, setFocused] = React.useState(true);
+    const stocks = useStockStore((state) => state.stocks);
+    const querySearch = useStockStore((state) => state.querySearch);
+    const querySort = useStockStore((state) => state.querySort);
 
-    const stockToRender = Array.from(stocks.values());
-
-    console.log('RENDERING LIST STOCKS');
-    console.log('values', stockToRender.map((s) => s.symbol));
+    const stockToRender = applyFilters(stocks, querySearch, querySort);
 
     useFocusEffect(
         React.useCallback(() => {
@@ -26,12 +26,16 @@ export default function StocksScreen() {
         }, []),
     );
 
+    console.log('RENDERING LIST STOCKS');
+    console.log('values', stockToRender.map((s) => s.symbol));
 
     return (
         <ScreenContainer
             style={styles.container}
         >
             <ThemedText type='title' >Stocks</ThemedText>
+            <Spacer size='small' />
+            <FilterActions />
             <Spacer size='small' />
             {isFocused && <AnimatedList
                 data={stockToRender}

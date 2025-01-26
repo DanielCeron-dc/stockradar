@@ -11,7 +11,10 @@ export interface IStock {
 interface IStockStore {
     stocks: Map<string, IStock>;
     querySearch: string;
-    modifyStock: (symbol: string, updatedStock: IStock) => void;
+    querySort: 'asc' | 'desc';
+    setQuerySearch: (search: string) => void;
+    setQuerySort: (sort: 'asc' | 'desc') => void;
+    modifyStock: (symbol: string, updatedStock: IStock) => void; //! this is not being used in the app
     updateSpecificStock: (symbol: string, updatedStock: IStock) => void; // Update a specific stock without changing the reference to the map
     setStocks: (stocks: Map<string, IStock>) => void;
 }
@@ -20,6 +23,8 @@ export const useStockStore = create<IStockStore>()((set) => ({
     stocks: new Map(),
     querySearch: '',
     querySort: 'asc',
+    setQuerySearch: (search) => set({ querySearch: search }),
+    setQuerySort: (sort) => set({ querySort: sort }),
     modifyStock: (symbol, updatedStock) =>
         set((state) => {
             const newStocks = new Map(state.stocks);
@@ -56,3 +61,19 @@ export function socketEvents(socket: Socket) {
 }
 
 
+export function applyFilters(stocks: Map<string, IStock>, querySearch: string, querySort: 'asc' | 'desc') {
+
+    let stockArray = Array.from(stocks.values());
+
+    const stockToRender = querySearch.length === 0 ? stockArray : stockArray.filter((stock) => {
+        return stock.symbol.toLowerCase().includes(querySearch.toLowerCase());
+    });
+
+    if (querySort === 'asc') {
+        stockToRender.sort((a, b) => a.price - b.price);
+    } else if (querySort === 'desc') {
+        stockToRender.sort((a, b) => b.price - a.price);
+    }
+
+    return stockToRender;
+};
