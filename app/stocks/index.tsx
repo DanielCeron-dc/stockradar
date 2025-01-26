@@ -7,15 +7,25 @@ import { useFocusEffect } from 'expo-router';
 import { ThemedText } from '@/components/ThemedText';
 import Spacer from '@/components/layout/Spacer';
 import StockItem from '@/components/home/StockItem';
+import AnimatedList from '@/components/AnimatedList';
 
 export default function StocksScreen() {
 
     const stocks = useStockStore((state) => state.stocks);
+    const [isFocused, setFocused] = React.useState(true);
 
     const stockToRender = Array.from(stocks.values());
 
     console.log('RENDERING LIST STOCKS');
     console.log('values', stockToRender.map((s) => s.symbol));
+
+    useFocusEffect(
+        React.useCallback(() => {
+            setFocused(true);
+            return () => setFocused(false);
+        }, []),
+    );
+
 
     return (
         <ScreenContainer
@@ -23,11 +33,14 @@ export default function StocksScreen() {
         >
             <ThemedText type='title' >Stocks</ThemedText>
             <Spacer size='small' />
-            <FlatList
+            {isFocused && <AnimatedList
                 data={stockToRender}
+                renderItem={({ item }) => (
+                    <StockItem stock={item} />
+                )}
+                ItemSeparatorComponent={() => (<View style={styles.separator}></View>)}
                 keyExtractor={(item) => item.symbol}
-                renderItem={({ item }) => <StockItem stock={item} />}
-            />
+            />}
         </ScreenContainer>
     );
 }
