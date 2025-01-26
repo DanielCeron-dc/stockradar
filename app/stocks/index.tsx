@@ -1,4 +1,4 @@
-import {  StyleSheet } from 'react-native';
+import {  StyleSheet, Text } from 'react-native';
 import React from 'react';
 import ScreenContainer from '@/components/layout/ScreenContainer';
 
@@ -10,6 +10,8 @@ export default function StocksScreen() {
         <ScreenContainer
             style={styles.container}
         >
+            <Text>Stocks</Text>
+         
         </ScreenContainer>
     );
 }
