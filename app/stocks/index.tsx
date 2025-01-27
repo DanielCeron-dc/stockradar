@@ -10,12 +10,14 @@ import { ThemedText } from '@/components/ThemedText';
 import FilterActions from '@/components/home/FilterActions';
 import Spacer from '@/components/layout/Spacer';
 import OfflineMessage from '@/components/OfflineMessage';
+import { useThemeColor } from '@/hooks/useThemeColor';
 
 export default function StocksScreen() {
     const [isFocused, setFocused] = React.useState(true);
     const stocks = useStockStore((state) => state.stocks);
     const querySearch = useStockStore((state) => state.querySearch);
     const querySort = useStockStore((state) => state.querySort);
+    const color = useThemeColor({}, 'text');
 
     const stockToRender = applyFilters(stocks, querySearch, querySort);
 
@@ -43,7 +45,7 @@ export default function StocksScreen() {
                 renderItem={({ item }) => (
                     <StockItem stock={item} />
                 )}
-                ItemSeparatorComponent={() => (<View style={styles.separator}></View>)}
+                ItemSeparatorComponent={() => (<View style={[styles.separator, {borderColor: color}]}></View>)}
                 keyExtractor={(item) => item.symbol}
             />}
         </ScreenContainer>

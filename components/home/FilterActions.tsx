@@ -15,7 +15,7 @@ export default function FilterActions() {
 
     return (
         <View style={styles.container}>
-            <TextInput style={[styles.input, { borderColor: color }]} placeholder="Search" onChangeText={search} />
+            <TextInput style={[styles.input, { borderColor: color , color}]} placeholder="Search" onChangeText={search} />
             <TouchableOpacity onPress={() => sort('asc')}>
                 <AntDesign name="arrowdown" size={24} color={color} />
             </TouchableOpacity>
