@@ -2,6 +2,8 @@
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
+Node version: v22.8.0
+
 ## Get started
 
 1. Install dependencies
@@ -27,6 +29,16 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
    ```bash
    npm test
    ```
+
+## Optional if you want to run the app on a physical device
+
+add a env file with your local ip address, like this:
+
+you can get your local ip address by running `ipconfig` on windows or `ifconfig` on mac
+
+```bash
+SOCKET_URL=http://192.168.1.20:3000
+```
 
 ## Tech stack
 

@@ -8,6 +8,7 @@ import 'react-native-reanimated';
 import { Platform } from 'react-native';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { useSocket } from '@/hooks/useSockets';
+import Constants from 'expo-constants';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -19,7 +20,7 @@ export default function RootLayout() {
   });
 
   useSocket({
-    url: Platform.OS === "android" ? "http://10.0.2.2:3000" : 'http://localhost:3000',
+    url: Constants.expoConfig?.extra?.socketUrl || (Platform.OS === "android" ? "http://10.0.2.2:3000" : 'http://localhost:3000'),
     opts: {},
   });
 
