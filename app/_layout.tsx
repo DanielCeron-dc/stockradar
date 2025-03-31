@@ -9,6 +9,7 @@ import { Platform } from 'react-native';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { useSocket } from '@/hooks/useSockets';
 import Constants from 'expo-constants';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -35,18 +36,21 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        <Stack.Screen
-          name="stocks"
-          options={{ title: 'Stocks' }}
-        />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    <GestureHandlerRootView>
+      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+        <Stack
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          <Stack.Screen
+            name="stocks"
+            options={{ title: 'Stocks' }}
+          />
+        </Stack>
+        <StatusBar style="auto" />
+      </ThemeProvider>
+
+    </GestureHandlerRootView>
   );
 }

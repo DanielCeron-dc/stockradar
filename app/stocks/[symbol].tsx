@@ -6,6 +6,7 @@ import { useStockStore } from '@/store/stock.store';
 import { ThemedText } from '@/components/ThemedText';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import Animated, { FadeIn } from 'react-native-reanimated';
+import CandlestickChartWithGesture from '@/components/charts/candlesStick/CandlestickChartWithGesture';
 
 export default function SingleStock() {
     const [mounted, setMounted] = React.useState(true);
@@ -25,7 +26,11 @@ export default function SingleStock() {
 
     return (
         <ScreenContainer style={styles.container}>
+
+            <CandlestickChartWithGesture candles={singleStock.candles ?? []} />
+
             {mounted && (
+                <>
                 <Animated.View style={styles.card} entering={FadeIn.duration(2000)}>
                     <ThemedText type="title" style={styles.symbol}>
                         {singleStock.symbol}
@@ -49,6 +54,7 @@ export default function SingleStock() {
                         />
                     </View>
                 </Animated.View>
+                </>
             )}
         </ScreenContainer>
     );
@@ -65,6 +71,7 @@ const styles = StyleSheet.create({
     },
     card: {
         borderWidth: 1,
+        overflow: 'hidden',
         borderColor: 'gray',
         borderRadius: 8,
         padding: 16,
