@@ -14,7 +14,6 @@ export interface IStock {
     price: number;
     daily_change: number;
     candles?: Candle[];
-    history?: IHistoryEntry[];
 }
 
 interface IStockStore {
